@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/loginpage.css') }}?v=1.1">
+</head>
+<body>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz-M8v4O8E1c-1tQ2g4k3k5L0M3Y_z1x9J2g&s" alt="Nimiso Logo" class="logo">
+            <h2>Admin Login</h2>
+            <p>Kelola Stok Produk Anda</p>
+        </div>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" placeholder=" " required>
+                <label for="username">Nama Pengguna</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder=" " required>
+                <label for="password">Kata Sandi</label>
+            </div>
+            <div id="error-message" style="display: none;"></div>
+            <div class="options-group">
+                <a href="#">Lupa Kata Sandi?</a>
+            </div>
+            <button type="submit" class="login-button">Masuk</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/loginpage.js') }}?v=1.1"></script>
+</body>
+</html>

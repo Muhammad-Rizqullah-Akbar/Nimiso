@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nimiso Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl8yC7Y8Y+49hmg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo" id="nimiso-logo">Nimiso</div>
+        <nav>
+            <div class="menu-item" id="categories-menu">
+                <div class="menu-label">
+                    Categories
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </div>
+                <div class="dropdown-content">
+                    <a href="#" class="category-link" data-category="accessories">Accessories</a>
+                    <a href="#" class="category-link" data-category="electronics">Electronics</a>
+                    <a href="#" class="category-link" data-category="toys">Toys</a>
+                    <a href="#" class="category-link" data-category="stationery">Stationery</a>
+                    <a href="#" class="add-new">+ Add New Categories</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content" id="main-content-area">
+        </main>
+
+    <div class="modal-overlay" id="edit-stock-modal">
+        <div class="modal-content">
+            <h3>Edit Mode</h3>
+            <div class="product-name-display" id="edit-product-name"></div>
+            <div class="stock-control">
+                <button id="minus-btn" disabled>-</button>
+                <span class="quantity-display" id="edit-quantity">0</span>
+                <button id="plus-btn">+</button>
+            </div>
+            <button class="update-button" id="update-stock-btn">Update Stock</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="delete-confirm-modal">
+        <div class="modal-content confirm-modal-content">
+            <h3>Delete Product?</h3>
+            <p style="color: var(--text-secondary-color);">Anda yakin ingin menghapus <span id="delete-product-name-display" style="font-weight: 600;"></span> dari daftar produk?</p>
+            <div class="confirm-buttons">
+                <button class="confirm-button yes" id="confirm-delete-yes">Yes</button>
+                <button class="confirm-button no" id="confirm-delete-no">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

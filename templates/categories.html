@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nimiso - Kategori</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categories.css') }}?v=1.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rubik:wght@700&display=swap" rel="stylesheet">
+    <script>
+        // Suntikkan role dari Flask ke variabel global JavaScript
+        window.currentUserRole = "{{ session.get('role') }}";
+    </script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">nimiso</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item-wrapper">
+                    <div class="nav-item dropdown-toggle" id="categoriesDropdownToggle">
+                        Categories <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu" id="categoriesDropdownMenu">
+                        <li><a href="#" class="add-new-category" data-category="add-new">+ Add New Categories</a></li>
+                    </ul>
+                </div>
+                <div class="nav-item-wrapper">
+                    <div class="nav-item">
+                        <a href="#" id="manageAdminLink">Manage Admin</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="sidebar-logout">
+                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1 id="categoryTitle"></h1>
+            <section class="product-grid" id="productGrid">
+                </section>
+        </main>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeEditModalButton">&times;</span>
+            <h2>Edit Mode</h2>
+            <p id="editProductName" class="product-name-modal"></p>
+            <p id="editProductCurrentStock" class="product-stock-modal"></p>
+            <div class="stock-control">
+                <button id="decrementStock" class="control-button">-</button>
+                <span id="stockChangeValue" class="stock-value-display">0</span>
+                <button id="incrementStock" class="control-button">+</button>
+            </div>
+            <button id="updateStockButton" class="update-button">Update Stock</button>
+        </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content small-modal">
+            <p>Delete product?</p>
+            <div class="confirm-buttons">
+                <button id="confirmDeleteYes" class="confirm-button yes-button">Yes</button>
+                <button id="confirmDeleteNo" class="confirm-button no-button">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeAddCategoryModalButton">&times;</span>
+            <h2 style="text-align: left; margin-bottom: 20px;">New Category</h2>
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label for="newCategoryName">Category Name:</label>
+                    <input type="text" id="newCategoryName" name="newCategoryName" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="addThisCategoryButton" class="update-button">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeAddProductModalButton">&times;</span>
+            <h2 style="text-align: left; margin-bottom: 20px;">Add New Product</h2>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName" name="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productStock">Stock:</label>
+                    <input type="number" id="productStock" name="productStock" min="0" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImageUrl">Image URL (Optional):</label>
+                    <input type="text" id="productImageUrl" name="productImageUrl" placeholder="e.g., https://via.placeholder.com/150">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="addThisProductButton" class="update-button">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="notificationToast" class="notification-toast">
+        <span id="notificationMessage"></span>
+    </div>
+    <script src="{{ url_for('static', filename='js/categories.js') }}?v=1.1"></script>
+</body>
+</html>

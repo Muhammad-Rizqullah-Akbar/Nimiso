@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nimiso Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}?v=1.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rubik:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">nimiso</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item-wrapper">
+                    <div class="nav-item dropdown-toggle" id="categoriesDropdownToggle">
+                        Categories <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu" id="categoriesDropdownMenu">
+                        <li><a href="#" data-category="accessories">Accessories</a></li>
+                        <li><a href="#" data-category="electronics">Electronics</a></li>
+                        <li><a href="#" data-category="toys">Toys</a></li>
+                        <li><a href="#" data-category="stationery">Stationery</a></li>
+                        <li><a href="#" class="add-new-category">+ Add New Categories</a></li>
+                    </ul>
+                </div>
+                <div class="nav-item-wrapper">
+                    <div class="nav-item">
+                        <a href="#" id="manageAdminLink">Manage Admin</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="sidebar-logout">
+                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <section class="top-stats">
+                <div class="stat-box">
+                    <i class="fas fa-shopping-basket stat-icon"></i>
+                    <div class="stat-label">Items</div>
+                    <div class="stat-value" id="totalItems">0</div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-boxes stat-icon"></i>
+                    <div class="stat-label">Products</div>
+                    <div class="stat-value" id="totalProducts">0</div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-list stat-icon"></i>
+                    <div class="stat-label">Categories</div>
+                    <div class="stat-value" id="totalCategories">0</div>
+                </div>
+            </section>
+
+            <section class="category-boxes">
+                <div class="category-box">
+                    <i class="fas fa-gem category-icon"></i>
+                    <div class="category-label">Accessories</div>
+                </div>
+                <div class="category-box">
+                    <i class="fas fa-laptop category-icon"></i>
+                    <div class="category-label">Electronics</div>
+                </div>
+                <div class="category-box">
+                    <i class="fas fa-robot category-icon"></i>
+                    <div class="category-label">Toys</div>
+                </div>
+                <div class="category-box">
+                    <i class="fas fa-pencil-ruler category-icon"></i>
+                    <div class="category-label">Stationery</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeAddCategoryModalButton">&times;</span>
+            <h2 style="text-align: left; margin-bottom: 20px;">New Category</h2>
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label for="newCategoryName">Category Name:</label>
+                    <input type="text" id="newCategoryName" name="newCategoryName" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="addThisCategoryButton" class="update-button">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="notificationToast" class="notification-toast">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}?v=1.1"></script>
+</body>
+</html>

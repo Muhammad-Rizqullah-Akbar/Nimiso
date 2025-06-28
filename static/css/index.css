@@ -1,0 +1,388 @@
+/* Universal CSS Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* General Styling */
+body {
+    font-family: 'Open Sans', sans-serif; /* Font umum yang menarik dan mudah dibaca */
+    background-color: #FFF8E7; /* Soft Cream (Vanilla Milk) - Latar Belakang Utama Konten */
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Utama */
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #FFD6D6; /* Peach Tint (Blush Apricot) - Sidebar */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .logo {
+    font-family: 'Rubik', sans-serif; /* Font menarik untuk logo */
+    font-size: 2.5em; /* Ukuran lebih besar */
+    font-weight: 700; /* Bold */
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Logo */
+    margin-bottom: 40px; /* Jarak lebih besar */
+    text-align: center;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Sedikit shadow untuk efek */
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+}
+
+/* Styling Box untuk Nav Item */
+.nav-item-wrapper {
+    margin-bottom: 10px; /* Jarak antar box menu */
+    border-radius: 8px; /* Sudut membulat */
+    /* overflow: hidden;  Ini bisa menyebabkan masalah dengan box-shadow dropdown jika tidak diatur dengan hati-hati,
+                            kita akan biarkan untuk saat ini tapi perhatikan jika ada kliping */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-item-wrapper.active { /* Style saat dropdown aktif */
+    background-color: rgba(162, 140, 122, 0.1); /* Hover state untuk wrapper */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+
+.nav-item {
+    padding: 12px 15px; /* Padding lebih baik */
+    cursor: pointer;
+    position: relative;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Nav Item */
+    font-weight: 600; /* Sedikit lebih tebal */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item a {
+    color: inherit; /* Warisi warna dari parent */
+    text-decoration: none;
+    display: block;
+    width: 100%; /* Agar link mengisi seluruh area item */
+    height: 100%;
+}
+
+/* Hover untuk item jika bukan dropdown-toggle */
+.nav-item:not(.dropdown-toggle):hover {
+    background-color: rgba(162, 140, 122, 0.2);
+}
+
+.dropdown-arrow {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Warna Panah */
+}
+
+.dropdown-toggle.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Hapus margin atas agar menempel ke toggle */
+    /* Perubahan Warna Latar Belakang Dropdown */
+    background-color: rgba(255, 214, 214, 0.8); /* Peach Tint dengan transparansi */
+    border: 1px solid rgba(162, 140, 122, 0.3); /* Border yang senada */
+    border-top: none; /* Hapus border atas agar menyatu */
+    border-radius: 0 0 8px 8px; /* Hanya sudut bawah yang membulat */
+    width: 100%; /* Lebar penuh sidebar */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08); /* Shadow lebih menonjol */
+    z-index: 10;
+    display: none; /* Sembunyikan secara default */
+    transform-origin: top; /* Animasi dari atas */
+    transform: scaleY(0);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.dropdown-menu.show {
+    display: block;
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.dropdown-menu li a {
+    padding: 10px 15px;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Dropdown */
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(206, 233, 249, 0.5); /* Baby Blue dengan transparansi untuk hover */
+}
+
+.dropdown-menu .add-new-category {
+    font-weight: bold;
+    color: #5C8CBA; /* Warna biru yang lebih gelap untuk teks aksi */
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: #FFF8E7; /* Soft Cream (Vanilla Milk) */
+}
+
+/* Top Stats Section */
+.top-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-box {
+    background-color: #CDE9F9; /* Baby Blue (Powder Sky) - Latar Belakang Cards */
+    border: 1px solid rgba(162, 140, 122, 0.2); /* Border senada */
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon {
+    font-size: 3em;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Warna Ikon */
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1.1em;
+    color: #7A695B; /* Sedikit lebih gelap dari Soft Brown untuk label */
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Warna Nilai Statistik */
+}
+
+/* Category Boxes Section */
+.category-boxes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.category-box {
+    background-color: #CDE9F9; /* Baby Blue (Powder Sky) - Latar Belakang Cards */
+    border: 1px solid rgba(162, 140, 122, 0.2); /* Border senada */
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    font-size: 2.5em;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Warna Ikon */
+    margin-bottom: 10px;
+}
+
+.category-label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Label Kategori */
+}
+
+/* Media Queries untuk responsivitas */
+@media (max-width: 1200px) {
+    .category-boxes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .category-boxes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .category-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+/* KODE BARU: Tambahkan di akhir file index.css */
+
+/* Modal (Pop-up) Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.modal.show-modal {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #FFF8E7;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show-modal .modal-content {
+    transform: scale(1);
+}
+
+.close-button {
+    color: #A28C7A;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #7A695B;
+}
+
+.form-group input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid rgba(162, 140, 122, 0.3);
+    border-radius: 5px;
+    background-color: #FFF8E7;
+    color: #A28C7A;
+    font-size: 1em;
+}
+
+.form-actions {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.update-button {
+    background-color: #FFD6D6;
+    color: #A28C7A;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Notifikasi Pop-up (Toast) Styling */
+.notification-toast {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #A28C7A;
+    color: #FFF8E7;
+    padding: 12px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.1em;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification-toast.show {
+    opacity: 1;
+    display: block;
+}
+/* KODE BARU UNTUK LOGOUT - Tambahkan di akhir setiap file CSS */
+
+.sidebar-logout {
+    margin-top: auto; /* Ini akan mendorong tombol ke bagian bawah */
+    padding-top: 20px;
+    border-top: 1px solid rgba(162, 140, 122, 0.3); /* Garis pemisah */
+}
+
+.sidebar-logout a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #A28C7A;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: rgba(162, 140, 122, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-logout a:hover {
+    background-color: #DC3545; /* Warna merah saat hover untuk menandakan aksi keluar */
+    color: white;
+}
+
+.sidebar-logout a i {
+    margin-right: 10px;
+}

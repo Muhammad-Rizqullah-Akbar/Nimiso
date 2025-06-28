@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS yang sudah kita buat untuk halaman login sebelumnya */
+        :root {
+            /* Palet Warna Nimiso Soft Kawaii */
+            --soft-cream: #FFF8E7;   /* Vanilla Milk */
+            --peach-tint: #FFD6D6;   /* Blush Apricot */
+            --soft-brown: #A28C7A;   /* Cozy Mocha */
+            --baby-blue: #CDE9F9;    /* Powder Sky */
+            --light-mint: #D3F5CE;   /* Pastel Mint */
+            --lilac-blush: #EADCF8;  /* Cloud Lavender */
+
+            /* Warna Spesifik Admin (diadaptasi dari palet) */
+            --admin-bg-gradient-start: #CDE9F9; /* Baby Blue */
+            --admin-bg-gradient-mid: #D3F5CE;   /* Light Mint */
+            --admin-bg-gradient-end: #EADCF8;   /* Cloud Lavender */
+
+            /* Warna untuk efek Glassmorphism (hanya pada background container) */
+            --glass-box-bg-transparent: rgba(255, 255, 255, 0.25); /* Transparansi untuk efek glass */
+            --glass-box-border: rgba(255, 255, 255, 0.5); /* Border login box */
+
+            /* Warna solid untuk elemen di dalam login box */
+            --solid-element-bg: #FFFFFF; /* Putih solid untuk input, button */
+            --text-color-dark: var(--soft-brown);
+            --text-color-light: rgba(162, 140, 122, 0.8);
+
+            --input-border-focus: var(--baby-blue);
+            --button-bg: var(--peach-tint);
+            --button-text-color: #FFFFFF;
+            --button-hover-bg: #FFB3B3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--admin-bg-gradient-start) 0%, var(--admin-bg-gradient-mid) 50%, var(--admin-bg-gradient-end) 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.7;
+            animation: moveBubbles 15s infinite ease-in-out alternate;
+            filter: blur(10px);
+        }
+
+        .bubble:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 15%; animation-duration: 18s; background: var(--baby-blue); }
+        .bubble:nth-child(2) { width: 100px; height: 100px; bottom: 5%; right: 20%; animation-duration: 12s; background: var(--lilac-blush); }
+        .bubble:nth-child(3) { width: 200px; height: 200px; top: 60%; left: 5%; animation-duration: 20s; background: var(--light-mint); }
+        .bubble:nth-child(4) { width: 120px; height: 120px; top: 20%; right: 10%; animation-duration: 16s; background: var(--peach-tint); }
+        .bubble:nth-child(5) { width: 80px; height: 80px; bottom: 15%; left: 30%; animation-duration: 14s; background: var(--soft-cream); }
+
+        @keyframes moveBubbles {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -20px) scale(1.05); }
+            50% { transform: translate(0, 20px) scale(0.95); }
+            75% { transform: translate(-20px, -10px) scale(1.03); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 400px;
+            padding: 40px;
+            background: var(--glass-box-bg-transparent);
+            border-radius: 20px;
+            border: 1px solid var(--glass-box-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            animation: fadeInScale 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-color-dark);
+        }
+
+        .login-header .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+        }
+
+        .login-header h2 {
+            font-size: 2.2em;
+            color: inherit;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .login-header p {
+            font-size: 0.9em;
+            color: var(--text-color-light);
+            opacity: 1;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: var(--solid-element-bg);
+            border-radius: 12px;
+            outline: none;
+            color: var(--text-color-dark);
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-color-dark);
+            opacity: 0.6;
+        }
+
+        .input-group input:focus {
+            border-color: var(--input-border-focus);
+            box-shadow: 0 0 0 3px rgba(var(--baby-blue), 0.2), inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color-dark);
+            font-size: 1em;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            background: transparent;
+            z-index: 1;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: 0px;
+            left: 15px;
+            font-size: 0.8em;
+            padding: 0 5px;
+            background: var(--solid-element-bg);
+            border-radius: 5px;
+            opacity: 1;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .options-group {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .options-group a {
+            color: var(--text-color-dark);
+            text-decoration: none;
+            font-size: 0.9em;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .options-group a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-button:hover {
+            background-color: var(--button-hover-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #error-message {
+            color: #E74C3C; /* Merah untuk pesan error */
+            font-size: 0.9em;
+            margin-top: -15px; /* Sesuaikan posisi agar dekat dengan form */
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 30px 20px;
+                gap: 20px;
+            }
+            .login-header h2 {
+                font-size: 1.8em;
+            }
+            .login-header .logo {
+                width: 70px;
+                height: 70px;
+            }
+            .input-group input {
+                padding: 12px 15px;
+                font-size: 1em;
+            }
+            .login-button {
+                padding: 12px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz-M8v4O8E1c-1tQ2g4k3k5L0M3Y_z1x9J2g&s" alt="Nimiso Logo" class="logo">
+            <h2>Admin Login</h2>
+            <p>Kelola Stok Produk Anda</p>
+        </div>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" placeholder=" " required>
+                <label for="username">Nama Pengguna</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder=" " required>
+                <label for="password">Kata Sandi</label>
+            </div>
+            <div id="error-message" style="display: none;"></div> <div class="options-group">
+                <a href="#">Lupa Kata Sandi?</a>
+            </div>
+            <button type="submit" class="login-button">Masuk</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const errorMessageDiv = document.getElementById('error-message');
+
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Mencegah form submit dan reload halaman
+
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                // --- BAGIAN INI SANGAT PENTING: SIMULASI PANGGILAN KE SERVER (BACKEND) ---
+                // Di aplikasi nyata, Anda akan mengirim permintaan POST ke server di sini.
+                // Contoh dengan fetch API (JavaScript Vanilla untuk AJAX):
+                /*
+                fetch('/api/login', { // Ganti '/api/login' dengan URL endpoint login di server Anda
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username, password: password })
+                })
+                .then(response => {
+                    if (response.ok) { // Jika respons status 200-299
+                        return response.json(); // Atau response.text() tergantung balasan server
+                    }
+                    throw new Error('Login Gagal'); // Tangkap error untuk status non-ok
+                })
+                .then(data => {
+                    // Jika login berhasil
+                    // Server Anda HARUS mengirimkan instruksi untuk redirect atau set cookie
+                    // Di sini kita langsung redirect ke index.html
+                    window.location.href = 'index.html'; // REDIRECT KE INDEX.HTML
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    errorMessageDiv.textContent = 'Nama pengguna atau kata sandi salah.';
+                    errorMessageDiv.style.display = 'block';
+                });
+                */
+
+                // --- SIMULASI LOGIN BERHASIL/GAGAL (UNTUK DEMO TANPA BACKEND) ---
+                // Hapus blok ini jika Anda sudah punya backend
+                if (username === 'admin' && password === 'password123') { // Contoh kredensial
+                    errorMessageDiv.style.display = 'none';
+                    // Langsung redirect ke halaman dashboard (index.html)
+                    window.location.href = 'index.html';
+                } else {
+                    errorMessageDiv.textContent = 'Nama pengguna atau kata sandi salah.';
+                    errorMessageDiv.style.display = 'block';
+                }
+                // --- AKHIR SIMULASI ---
+            });
+        });
+    </script>
+</body>
+</html>

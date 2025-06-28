@@ -1,0 +1,612 @@
+/* Universal CSS Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* General Styling */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #FFF8E7; /* Soft Cream (Vanilla Milk) - Latar Belakang Utama Konten */
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Utama */
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling (Sama seperti index.css dan categories.css) */
+.sidebar {
+    width: 250px;
+    background-color: #FFD6D6; /* Peach Tint (Blush Apricot) - Sidebar */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .logo {
+    font-family: 'Rubik', sans-serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #A28C7A;
+    margin-bottom: 40px;
+    text-align: center;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+}
+
+.nav-item-wrapper {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-item-wrapper.active {
+    background-color: rgba(162, 140, 122, 0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.nav-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    position: relative;
+    color: #A28C7A;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.nav-item:not(.dropdown-toggle):hover {
+    background-color: rgba(162, 140, 122, 0.2);
+}
+
+.dropdown-arrow {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+    color: #A28C7A;
+}
+
+.dropdown-toggle.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: rgba(255, 214, 214, 0.8); /* Peach Tint dengan transparansi */
+    border: 1px solid rgba(162, 140, 122, 0.3);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    display: none;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.dropdown-menu.show {
+    display: block;
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.dropdown-menu li a {
+    padding: 10px 15px;
+    color: #A28C7A; /* Soft Brown (Cozy Mocha) - Teks Dropdown */
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(206, 233, 249, 0.5); /* Baby Blue dengan transparansi untuk hover */
+}
+
+.dropdown-menu .add-new-category {
+    font-weight: bold;
+    color: #5C8CBA;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #FFF8E7; /* Soft Cream (Vanilla Milk) */
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.main-content h1 {
+    font-size: 2em;
+    color: #A28C7A;
+    margin: 0;
+}
+
+.add-new-button {
+    background-color: #A28C7A; /* Soft Brown */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add-new-button:hover {
+    background-color: #8C7567; /* Sedikit lebih gelap dari Soft Brown */
+    transform: translateY(-2px);
+}
+
+.add-new-button i {
+    font-size: 0.9em;
+}
+
+/* Admin Grid Styling */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.admin-box {
+    background-color: #A28C7A; /* Soft Brown untuk background box admin */
+    color: #FFF8E7; /* Soft Cream untuk teks di dalam box admin */
+    border-radius: 8px;
+    padding: 20px;
+    padding-bottom: 35px; /* Tambah padding bawah untuk memberi ruang Account created */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.admin-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.admin-profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #CDE9F9; /* Baby Blue placeholder */
+    margin-right: 20px;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #FFF8E7;
+    font-size: 1.5em; /* Ukuran font untuk inisial */
+    color: #A28C7A; /* Warna inisial */
+    font-weight: bold; /* Ketebalan inisial */
+    line-height: 1; /* Hapus spasi ekstra pada line-height */
+}
+
+/* Hilangkan styling untuk img di dalam admin-profile-pic */
+.admin-profile-pic img {
+    display: none;
+}
+
+.admin-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-right: 45px;
+    flex-basis: 0;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-top: 5px;
+}
+
+.admin-details p {
+    margin: 0;
+    line-height: 1.3;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-details p:last-of-type {
+    margin-bottom: 0;
+}
+
+
+.admin-details .detail-label {
+    font-weight: 400;
+    margin-right: 5px;
+    color: rgba(255, 248, 231, 0.8);
+}
+
+.admin-details .detail-value {
+    font-weight: 600;
+    color: #FFF8E7;
+}
+
+.admin-details .admin-name .detail-value {
+    font-size: 1.25em;
+    font-weight: 700;
+}
+
+.admin-details .admin-role .detail-value {
+    font-size: 0.95em;
+}
+
+.admin-details .admin-wa .detail-value {
+    font-size: 0.9em;
+}
+
+.admin-account-created {
+    position: absolute;
+    bottom: 5px;
+    left: 15px;
+    font-size: 0.6em;
+    color: rgba(255, 248, 231, 0.5);
+    z-index: 2;
+    max-width: calc(100% - 100px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.delete-admin-button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background-color: #DC3545; /* Merah */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    z-index: 2;
+}
+
+.delete-admin-button:hover {
+    background-color: #C82333;
+    transform: scale(1.1);
+}
+
+/* Modal (Pop-up) Styling - Diperbarui untuk show-modal class */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.modal.show-modal {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #FFF8E7; /* Soft Cream */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show-modal .modal-content {
+    transform: scale(1);
+}
+
+/* Prioritas Z-index untuk modal konfirmasi delete */
+#deleteAdminConfirmModal {
+    z-index: 1001;
+}
+
+
+.close-button {
+    color: #A28C7A;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #5C8CBA;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #7A695B;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid rgba(162, 140, 122, 0.3);
+    border-radius: 5px;
+    background-color: #FFF8E7;
+    color: #A28C7A;
+    font-size: 1em;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #5C8CBA;
+    box-shadow: 0 0 0 3px rgba(92, 140, 186, 0.2);
+}
+
+.form-actions {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.update-button {
+    background-color: #FFD6D6; /* Peach Tint */
+    color: #A28C7A; /* Soft Brown */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.update-button:hover {
+    background-color: #E2B9B9;
+    transform: translateY(-2px);
+}
+
+/* Small Delete Confirmation Modal (Sama seperti categories.css) */
+.small-modal {
+    max-width: 300px;
+    padding: 20px;
+    background-color: #CDE9F9; /* Baby Blue */
+}
+
+.small-modal p {
+    font-size: 1.1em;
+    color: #7A695B;
+    margin-bottom: 20px;
+}
+
+.small-modal .highlight-text {
+    font-weight: bold;
+    color: #A28C7A; /* Soft Brown */
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.confirm-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.yes-button {
+    background-color: #A28C7A; /* Soft Brown */
+    color: white;
+}
+
+.yes-button:hover {
+    background-color: #8C7567;
+}
+
+.no-button {
+    background-color: #DC3545; /* Merah */
+    color: white;
+}
+
+.no-button:hover {
+    background-color: #C82333;
+}
+
+/* Notifikasi Pop-up (Toast) Styling (Sama seperti categories.css) */
+.notification-toast {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #A28C7A; /* Soft Brown */
+    color: #FFF8E7; /* Soft Cream */
+    padding: 12px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.1em;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification-toast.show {
+    opacity: 1;
+    display: block;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .admin-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .modal-content {
+        max-width: 90%;
+        padding: 20px;
+    }
+    .notification-toast {
+        width: 80%;
+        text-align: center;
+        bottom: 20px;
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+    .admin-details {
+        padding-right: 0;
+        margin-right: 45px;
+    }
+    .admin-box {
+        padding-bottom: 40px;
+    }
+    .admin-account-created {
+        bottom: 10px;
+        left: 20px;
+        font-size: 0.7em;
+        right: 50px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+    .container {
+        flex-direction: column;
+    }
+    .main-content {
+        padding: 15px;
+    }
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+    .modal-content {
+        padding: 15px;
+    }
+    .notification-toast {
+        bottom: 15px;
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+    .admin-box {
+        padding-bottom: 45px;
+    }
+    .admin-details {
+        margin-right: 35px;
+    }
+    .admin-account-created {
+        right: 45px;
+    }
+}
+/* KODE BARU UNTUK LOGOUT - Tambahkan di akhir setiap file CSS */
+
+.sidebar-logout {
+    margin-top: auto; /* Ini akan mendorong tombol ke bagian bawah */
+    padding-top: 20px;
+    border-top: 1px solid rgba(162, 140, 122, 0.3); /* Garis pemisah */
+}
+
+.sidebar-logout a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #A28C7A;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: rgba(162, 140, 122, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-logout a:hover {
+    background-color: #DC3545; /* Warna merah saat hover untuk menandakan aksi keluar */
+    color: white;
+}
+
+.sidebar-logout a i {
+    margin-right: 10px;
+}

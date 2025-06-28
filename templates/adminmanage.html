@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nimiso - Manage Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminmanage.css') }}?v=1.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Rubik:wght@700&display=swap" rel="stylesheet">
+    <script>
+        // Suntikkan role dan username dari Flask ke variabel global JavaScript
+        window.currentUserRole = "{{ session.get('role') }}";
+        window.currentUsername = "{{ session.get('username') }}";
+    </script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">nimiso</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item-wrapper">
+                    <div class="nav-item dropdown-toggle" id="categoriesDropdownToggle">
+                        Categories <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <ul class="dropdown-menu" id="categoriesDropdownMenu">
+                        <li><a href="#" class="add-new-category" data-category="add-new">+ Add New Categories</a></li>
+                    </ul>
+                </div>
+                <div class="nav-item-wrapper">
+                    <div class="nav-item">
+                        <a href="#" id="manageAdminLink">Manage Admin</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="sidebar-logout">
+                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="main-header">
+                <h1>Manage Admin</h1>
+                <button id="addNewAdminButton" class="add-new-button">
+                    <i class="fas fa-plus"></i> add new admin
+                </button>
+            </div>
+
+            <section class="admin-grid" id="adminGrid">
+                </section>
+        </main>
+    </div>
+
+    <div id="addAdminModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeAddAdminModalButton">&times;</span>
+            <h2>Add New Admin</h2>
+            <form id="addAdminForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">WhatsApp Number:</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="e.g., +6281234567890" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminRole">Role:</label>
+                    <select id="adminRole" name="adminRole" required>
+                        <option value="admin">Admin</option>
+                        <option value="supervisor">Supervisor</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="addThisAdminButton" class="update-button">Add This Admin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteAdminConfirmModal" class="modal">
+        <div class="modal-content small-modal">
+            <p>Delete admin <span id="adminToDeleteName" class="highlight-text"></span>?</p>
+            <div class="confirm-buttons">
+                <button id="confirmAdminDeleteYes" class="confirm-button yes-button">Yes</button>
+                <button id="confirmDeleteNo" class="confirm-button no-button">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationToast" class="notification-toast">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/adminmanage.js') }}?v=1.1"></script>
+</body>
+</html>
