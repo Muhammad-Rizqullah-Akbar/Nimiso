@@ -101,6 +101,37 @@
         </div>
     </div>
 
+    <div id="editAdminModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeEditAdminModalButton">&times;</span>
+            <h2>Edit Admin Profile</h2>
+            <form id="editAdminForm">
+                <input type="hidden" id="editAdminId">
+                <div class="form-group">
+                    <label for="editUsername">Username:</label>
+                    <input type="text" id="editUsername" name="editUsername" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editFullName">Full Name:</label>
+                    <input type="text" id="editFullName" name="editFullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhoneNumber">WhatsApp Number:</label>
+                    <input type="tel" id="editPhoneNumber" name="editPhoneNumber" placeholder="e.g., +6281234567890" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAdminRole">Role:</label>
+                    <select id="editAdminRole" name="editAdminRole" required>
+                        <option value="admin">Admin</option>
+                        <option value="supervisor">Supervisor</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="updateAdminButton" class="update-button">Update Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div id="notificationToast" class="notification-toast">
         <span id="notificationMessage"></span>
     </div>

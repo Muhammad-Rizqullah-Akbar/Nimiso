@@ -37,7 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationToast = document.getElementById('notificationToast');
     const notificationMessage = document.getElementById('notificationMessage');
     
-    // ** VARIABEL UNTUK DELETE **
+    // ** MODAL EDIT ADMIN ELEMENTS (BARU) **
+    const editAdminModal = document.getElementById('editAdminModal');
+    const closeEditAdminModalButton = document.getElementById('closeEditAdminModalButton');
+    const editAdminForm = document.getElementById('editAdminForm');
+    const editAdminIdInput = document.getElementById('editAdminId');
+    const editUsernameInput = document.getElementById('editUsername');
+    const editFullNameInput = document.getElementById('editFullName');
+    const editPhoneNumberInput = document.getElementById('editPhoneNumber');
+    const editAdminRoleSelect = document.getElementById('editAdminRole');
+    const updateAdminButton = document.getElementById('updateAdminButton');
+
+    // ** VARIABEL UNTUK DELETE & EDIT **
     let adminToDeleteId = null;
     let adminToDeleteElement = null;
     let notificationTimeout;
@@ -57,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeAllModals() {
         if (addAdminModal) addAdminModal.classList.remove('show-modal');
         if (deleteAdminConfirmModal) deleteAdminConfirmModal.classList.remove('show-modal');
+        if (editAdminModal) editAdminModal.classList.remove('show-modal'); // Tutup modal edit
     }
 
     const getInitials = (name) => {
@@ -99,17 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     adminBox.classList.add('admin-box');
                     adminBox.dataset.adminId = admin.id;
 
-                    // --- LOGIKA KONDISIONAL BARU UNTUK TOMBOL HAPUS ---
+                    // --- LOGIKA KONDISIONAL UNTUK TOMBOL HAPUS DAN EDIT ---
                     let actionButtonsHtml = '';
-                    // Tampilkan tombol hapus HANYA jika role adalah supervisor dan BUKAN admin yang sedang login
+                    // Tombol Edit (pensil) hanya untuk supervisor, tidak bisa mengedit akun sendiri
                     if (currentUserRole === 'supervisor' && admin.username !== currentUsername) {
-                        actionButtonsHtml = `
-                            <div class="admin-actions">
-                                <button class="delete-admin-button" data-admin-id="${admin.id}"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                        `;
+                         actionButtonsHtml += `<button class="edit-admin-button" data-admin-id="${admin.id}"><i class="fas fa-pencil-alt"></i></button>`;
                     }
-                    // --- AKHIR LOGIKA KONDISIONAL ---
+                    // Tombol Hapus hanya untuk supervisor, dan BUKAN admin yang sedang login
+                    if (currentUserRole === 'supervisor' && admin.username !== currentUsername) {
+                        actionButtonsHtml += `<button class="delete-admin-button" data-admin-id="${admin.id}"><i class="fas fa-trash-alt"></i></button>`;
+                    }
+
+                    // Tampilkan div admin-actions hanya jika ada tombol
+                    const adminActionsWrapper = actionButtonsHtml ? `<div class="admin-actions">${actionButtonsHtml}</div>` : '';
 
                     adminBox.innerHTML = `
                         <div class="admin-profile-pic">
@@ -121,10 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p><span class="detail-label">WA:</span> <span class="detail-value admin-wa">${admin.wa_number}</span></p>
                         </div>
                         <p class="admin-account-created">Account created: ${admin.created_date}</p>
-                        ${actionButtonsHtml}
+                        ${adminActionsWrapper}
                     `;
                     
-
                     adminGrid.appendChild(adminBox);
                 });
             }
@@ -144,9 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Attach Event Listeners to rendered elements ---
     function attachAdminEventListeners() {
-        // HANYA pasang event listener untuk tombol yang ada
+        // Pasang event listener untuk tombol yang ada
         document.querySelectorAll('.delete-admin-button').forEach(button => {
             button.addEventListener('click', handleDeleteAdminButtonClick);
+        });
+        document.querySelectorAll('.edit-admin-button').forEach(button => { // Listener untuk tombol edit
+            button.addEventListener('click', handleEditAdminButtonClick);
         });
     }
 
@@ -163,6 +179,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (deleteAdminConfirmModal) deleteAdminConfirmModal.classList.add('show-modal');
     }
     
+    // --- Event handler for edit admin button (BARU) ---
+    async function handleEditAdminButtonClick(event) {
+        event.stopPropagation();
+        const adminId = event.currentTarget.dataset.adminId;
+
+        try {
+            // Fetch detail admin dari API endpoint baru
+            const response = await fetch(`/api/admin/${adminId}`);
+            if (!response.ok) throw new Error('Failed to fetch admin details.');
+            
+            const admin = await response.json();
+            
+            // Isi form modal edit dengan data admin
+            editAdminIdInput.value = admin.id;
+            editUsernameInput.value = admin.username;
+            editFullNameInput.value = admin.full_name;
+            editPhoneNumberInput.value = admin.wa_number;
+            editAdminRoleSelect.value = admin.role;
+            
+            closeAllModals();
+            editAdminModal.classList.add('show-modal');
+        } catch (error) {
+            console.error('Error fetching admin details for edit:', error);
+            showNotification('Gagal memuat data admin untuk diedit.');
+        }
+    }
+
     // --- Role-based UI Visibility ---
     function applyRolePermissions() {
         console.log('Applying role permissions. Current role:', currentUserRole);
@@ -174,9 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 addNewAdminButton.style.display = 'flex';
             }
         }
-        
         // Tombol delete dan edit sudah diatur visibilitasnya di template string
-        // Jadi logic di sini tidak diperlukan lagi
     }
 
     // --- Add New Admin Modal Logic ---
@@ -192,6 +233,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addAdminModal) {
         addAdminModal.addEventListener('click', (event) => {
             if (event.target === addAdminModal) { closeAllModals(); }
+        });
+    }
+    
+    // Attach event listeners for edit modal (BARU)
+    if (closeEditAdminModalButton) closeEditAdminModalButton.addEventListener('click', closeAllModals);
+    if (editAdminModal) {
+        editAdminModal.addEventListener('click', (event) => {
+            if (event.target === editAdminModal) { closeAllModals(); }
         });
     }
 
@@ -244,6 +293,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // --- Submit Edit Admin Form (BARU) ---
+    if (editAdminForm) {
+        editAdminForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const adminId = editAdminIdInput.value;
+            const fullName = editFullNameInput.value.trim();
+            const phoneNumber = editPhoneNumberInput.value.trim();
+            const role = editAdminRoleSelect.value;
+
+            // Pastikan user adalah supervisor dan tidak mengedit dirinya sendiri
+            const adminToEditUsername = editUsernameInput.value;
+            if (currentUserRole !== 'supervisor' || adminToEditUsername === currentUsername) {
+                showNotification('Akses ditolak. Anda tidak memiliki izin untuk mengedit profil ini.', 3000);
+                return;
+            }
+
+            const updatedAdminData = {
+                full_name: fullName,
+                role: role,
+                wa_number: phoneNumber
+            };
+            
+            try {
+                const response = await fetch(`/api/admin/${adminId}`, {
+                    method: 'PUT', // Menggunakan method PUT untuk update
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedAdminData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showNotification(result.message);
+                    closeAllModals();
+                    fetchAndRenderAdminGrid(); // Muat ulang grid admin
+                } else {
+                    showNotification(result.error || 'Gagal mengupdate profil admin.');
+                }
+            } catch (error) {
+                console.error('Error updating admin:', error);
+                showNotification('Terjadi kesalahan jaringan.');
+            }
+        });
+    }
+
     // --- Delete Admin Confirmation Logic ---
     function openDeleteAdminConfirmModal() {
         closeAllModals();
